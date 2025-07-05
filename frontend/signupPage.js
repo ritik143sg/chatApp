@@ -19,8 +19,10 @@ const handleSubmit = async (event) => {
     const response = await axios.post("http://localhost:5000/user/add", data);
 
     console.log(response);
+    alert(response.data.msg);
   } catch (error) {
     console.log(error);
+    alert(error.response.data.msg);
   }
 
   event.target.username.value = "";

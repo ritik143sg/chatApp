@@ -14,7 +14,7 @@ const addUser = async (req, res) => {
     });
 
     if (findUser) {
-      res.json({ msg: "User Exit Already" });
+      res.status(400).json({ msg: "User already exists, Please Login" });
     } else {
       const newUser = await User.create({
         username: user.username,
@@ -23,12 +23,10 @@ const addUser = async (req, res) => {
         password: await encryptPassword(user.password),
       });
     }
-    res.json({ msg: "user added" });
+    res.status(201).json({ msg: "Successfuly signed up", user: user });
   } catch (error) {
-    res.json({ msg: error.message });
+    res.status(500).json({ msg: error.message });
   }
-
-  //res.json({ msg: "user added" });
 };
 
 module.exports = addUser;

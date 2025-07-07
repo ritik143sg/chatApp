@@ -1,0 +1,28 @@
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  const email = event.target.email.value;
+
+  const password = event.target.password.value;
+
+  console.log(email, password);
+  const data = {
+    email: email,
+
+    password: password,
+  };
+
+  try {
+    const response = await axios.post("http://localhost:5000/user/login", data);
+
+    console.log(response);
+    alert(response.data.msg);
+  } catch (error) {
+    console.log(error);
+    alert(error.response.data.msg);
+  }
+
+  event.target.email.value = "";
+
+  event.target.password.value = "";
+};

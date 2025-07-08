@@ -16,6 +16,7 @@ const handleSubmit = async (event) => {
     const response = await axios.post("http://localhost:5000/user/login", data);
 
     console.log(response);
+    localStorage.setItem("token", JSON.stringify(response.data.token));
     alert(response.data.msg);
   } catch (error) {
     console.log(error);

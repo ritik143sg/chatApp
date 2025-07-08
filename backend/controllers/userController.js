@@ -1,6 +1,8 @@
 const { User } = require("../models/userModel");
+
 const { encryptPassword, comparePassword } = require("../middleware/bcryptjs");
 const { getToken } = require("../middleware/authentication");
+const { Chat } = require("../models");
 
 const addUser = async (req, res) => {
   const user = req.body;
@@ -43,7 +45,7 @@ const auth = async (req, res) => {
       if (!(await comparePassword(data.password, checkUser.password))) {
         res.status(401).json({ msg: "Wrong Password - User Not Authorised " });
       } else {
-        const token = getToken(checkUser);
+        const token = await getToken(checkUser);
         res.status(201).json({
           msg: "User login successful",
           token: token,
@@ -56,4 +58,31 @@ const auth = async (req, res) => {
   }
 };
 
-module.exports = { addUser, auth };
+const getAllUser = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    console.log(users);
+
+    res.status(201).json({ msg: "get all users", users: users });
+  } catch (error) {
+    res.status(201).json({ msg: "get all users failed", error: error });
+  }
+};
+
+const msgStore = async (req, res) => {
+  const chat = req.body;
+  const user = req.user;
+  console.log(chat.msg);
+  try {
+    const msg = await Chat.create({
+      msg: chat.msg,
+      UserId: user.id,
+    });
+
+    res.status(201).json({ msg: "message store", newmsg: msg });
+  } catch (error) {
+    res.status(201).json({ msg: "store  msg failed", error: error });
+  }
+};
+
+module.exports = { addUser, auth, getAllUser, msgStore };

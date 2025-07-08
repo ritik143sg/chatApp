@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const userRouter = require("./routes/userRoute");
 const cors = require("cors");
 const sequelize = require("./utils/DB/connectDB");
+const { User, Chat } = require("./models");
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ app.use("/user", userRouter);
 const PORT = process.env.PORT || 5000;
 
 sequelize
-  .sync()
+  .sync({ force: false })
   .then(() => {
     app.listen(PORT, () => {
       console.log(`App is running on the port ${PORT}`);

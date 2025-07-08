@@ -11,7 +11,7 @@ const User = sequelize.define("User", {
   username: { allowNull: false, type: DataTypes.STRING },
   email: { allowNull: false, type: DataTypes.STRING },
   password: { allowNull: false, type: DataTypes.STRING },
-  phoneNo: { allowNull: false, type: DataTypes.STRING },
+  phoneNumber: { allowNull: false, type: DataTypes.STRING },
 });
 
 module.exports = { User };

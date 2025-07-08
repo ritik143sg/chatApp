@@ -1,39 +1,82 @@
-h1 {
-  color: rgb(125, 228, 228);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#box {
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  height: 100vh;
 }
 
-#userBox {
-  background-color: rgb(240, 203, 203);
-  width: 50%;
-  height: 500px;
+/* Main Chat Box */
+#box {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  overflow-y: auto;
+  border-bottom: 1px solid #ccc;
 }
+
+#box h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* User Messages Container */
+#userBox {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 75vh;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+#userBox ul {
+  list-style: none;
+}
+
+#userBox li {
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  background-color: #e1f5fe;
+  border-radius: 8px;
+  color: #333;
+  word-wrap: break-word;
+}
+
+/* Footer Input Area */
 #footer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
 }
 
-#footer input {
-  width: 40%;
-  padding: 5px;
-  border-radius: 10px;
-  border-color: aquamarine;
+#msg {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
-#footer button {
-  padding: 9px;
-  border-radius: 10px;
-  /* border-color: aquamarine; */
-  background-color: rgb(114, 114, 182);
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #2196f3;
   border: none;
-  color: antiquewhite;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1976d2;
 }

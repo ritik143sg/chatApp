@@ -1,6 +1,23 @@
 window.onload = function () {
   localStorage.setItem("allUsers", JSON.stringify([]));
+  getAllMessage();
 };
+
+const getAllMessage = async () => {
+  const token = JSON.parse(localStorage.getItem("token"));
+  try {
+    const msg = await axios.get("http://localhost:5000/message/getAllMsg", {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(msg);
+    displymsg(msg.data.msg);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const button = document.querySelector("button");
 
 button.addEventListener("click", async () => {
@@ -12,13 +29,19 @@ button.addEventListener("click", async () => {
   };
 
   try {
-    const response = await axios.post("http://localhost:5000/user/chat", data);
+    const token = JSON.parse(localStorage.getItem("token"));
+    const response = await axios.post("http://localhost:5000/user/chat", data, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
 
     console.log(response);
   } catch (error) {
     console.log(error);
     alert(error.response.data.msg);
   }
+  msgButton.value = "";
 });
 
 const show = (users) => {
@@ -30,10 +53,20 @@ const show = (users) => {
   });
 };
 
+const displymsg = (message) => {
+  const ul = document.querySelector("ul");
+  message.forEach((msg) => {
+    const li = document.createElement("li");
+    li.innerText = `You: ${msg.msg} `;
+    ul.appendChild(li);
+  });
+};
+
 const addNewUsers = (users, getAllUser) => {
   const newUsers = getAllUser.filter(
     (newUser) => !users.some((user) => user.id === newUser.id)
   );
+  // username;
 
   const updatedUsers = [...users, ...newUsers];
   localStorage.setItem("allUsers", JSON.stringify(updatedUsers));
@@ -43,6 +76,7 @@ const addNewUsers = (users, getAllUser) => {
 const getNewUser = async () => {
   try {
     const res = await axios.get("http://localhost:5000/user/getAllUsers");
+    console.log(res);
     const allUsers = res.data.users;
     const users = JSON.parse(localStorage.getItem("allUsers")) || [];
     addNewUsers(users, allUsers);
@@ -51,5 +85,9 @@ const getNewUser = async () => {
   }
 };
 
-// setInterval(getNewUser, 1000);
+// setInterval(() => {
+//   getNewUser();
+//   getAllMessage();
+// }, 1000);
+
 getNewUser();

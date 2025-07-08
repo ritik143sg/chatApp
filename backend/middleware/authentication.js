@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -21,22 +20,19 @@ const getToken = async (req) => {
 };
 
 const authentication = (req, res, next) => {
-  const authHeader = req.headers["authentication"];
-
+  const authHeader = req.headers["authorization"];
   if (!authHeader) {
-    return res.status(401).json({ meggage: "Authentication header mission" });
+    return res.status(401).json({ message: "Authentication header missing" });
   }
 
   const token = authHeader.split(" ")[1];
-
   if (!token) {
     return res.status(401).json({ message: "Token missing" });
   }
 
   try {
-    const decoded = jwt.verify(token, secretKey);
+    const decoded = jwt.verify(token, jwtKey);
     req.user = decoded;
-
     next();
   } catch (err) {
     return res.status(403).json({ message: "Invalid token" });

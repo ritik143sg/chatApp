@@ -1,6 +1,17 @@
 window.onload = function () {
   localStorage.setItem("allUsers", JSON.stringify([]));
+  localStorage.setItem("allMsgs", JSON.stringify([]));
   getAllMessage();
+};
+
+const addNewMsgs = (msgs, newMsg) => {
+  const newMsgs = newMsg.filter(
+    (newMsg) => !msgs.some((msg) => msg.id === newMsg.id)
+  );
+
+  const updatedMsgs = [...msgs, ...newMsgs];
+  localStorage.setItem("allMsgs", JSON.stringify(updatedMsgs));
+  displymsg(newMsgs);
 };
 
 const getAllMessage = async () => {
@@ -11,8 +22,9 @@ const getAllMessage = async () => {
         authorization: `Bearer ${token}`,
       },
     });
+    const msgs = JSON.parse(localStorage.getItem("allMsgs")) || [];
+    addNewMsgs(msgs, msg.data.msg);
     console.log(msg);
-    displymsg(msg.data.msg);
   } catch (error) {
     console.log(error);
   }
@@ -66,7 +78,6 @@ const addNewUsers = (users, getAllUser) => {
   const newUsers = getAllUser.filter(
     (newUser) => !users.some((user) => user.id === newUser.id)
   );
-  // username;
 
   const updatedUsers = [...users, ...newUsers];
   localStorage.setItem("allUsers", JSON.stringify(updatedUsers));
@@ -85,9 +96,9 @@ const getNewUser = async () => {
   }
 };
 
-// setInterval(() => {
-//   getNewUser();
-//   getAllMessage();
-// }, 1000);
+setInterval(() => {
+  getNewUser();
+  getAllMessage();
+}, 1000);
 
-getNewUser();
+// getNewUser();

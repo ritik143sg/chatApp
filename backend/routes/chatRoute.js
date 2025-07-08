@@ -4,6 +4,6 @@ const getAllMsg = require("../controllers/messageControllers");
 
 const chatRouter = express.Router();
 
-chatRouter.get("/getAllMsg", authentication, getAllMsg);
+chatRouter.get("/getAllMsg/:msgId", authentication, getAllMsg);
 
 module.exports = chatRouter;

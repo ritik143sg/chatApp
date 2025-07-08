@@ -1,7 +1,22 @@
 window.onload = function () {
   localStorage.setItem("allUsers", JSON.stringify([]));
-  localStorage.setItem("allMsgs", JSON.stringify([]));
-  getAllMessage();
+  // localStorage.setItem("allMsgs", JSON.stringify([]));
+  getNewUser();
+  getAllInitialMessage();
+};
+
+const get10Msg = (msg) => {
+  let len = msg.length;
+  if (len <= 10) {
+    return msg;
+  } else {
+    return msg.slice(len - 10 - 1, len);
+  }
+};
+
+const getAllInitialMessage = () => {
+  const msgs = JSON.parse(localStorage.getItem("allMsgs")) || [];
+  displymsg(msgs);
 };
 
 const addNewMsgs = (msgs, newMsg) => {
@@ -9,19 +24,31 @@ const addNewMsgs = (msgs, newMsg) => {
     (newMsg) => !msgs.some((msg) => msg.id === newMsg.id)
   );
 
-  const updatedMsgs = [...msgs, ...newMsgs];
+  let updatedMsgs = [...msgs, ...newMsgs];
+  updatedMsgs = get10Msg(updatedMsgs);
   localStorage.setItem("allMsgs", JSON.stringify(updatedMsgs));
   displymsg(newMsgs);
 };
 
 const getAllMessage = async () => {
   const token = JSON.parse(localStorage.getItem("token"));
+  const msgs = JSON.parse(localStorage.getItem("allMsgs")) || [];
+
+  let id = 0;
+
+  if (msgs.length !== 0) {
+    id = msgs[msgs.length - 1].id;
+  }
+
   try {
-    const msg = await axios.get("http://localhost:5000/message/getAllMsg", {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
+    const msg = await axios.get(
+      `http://localhost:5000/message/getAllMsg/${id}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const msgs = JSON.parse(localStorage.getItem("allMsgs")) || [];
     addNewMsgs(msgs, msg.data.msg);
     console.log(msg);
@@ -102,3 +129,4 @@ setInterval(() => {
 }, 1000);
 
 // getNewUser();
+getNewUser();

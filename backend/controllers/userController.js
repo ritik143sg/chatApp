@@ -1,6 +1,6 @@
-const { where } = require("sequelize");
 const { User } = require("../models/userModel");
-const { encryptPassword } = require("../middleware/bcryptjs");
+const { encryptPassword, comparePassword } = require("../middleware/bcryptjs");
+const { getToken } = require("../middleware/authentication");
 
 const addUser = async (req, res) => {
   const user = req.body;
@@ -29,4 +29,31 @@ const addUser = async (req, res) => {
   }
 };
 
-module.exports = addUser;
+const auth = async (req, res) => {
+  const data = req.body;
+  try {
+    const checkUser = await User.findOne({
+      where: {
+        email: data.email,
+      },
+    });
+    if (!checkUser) {
+      res.status(404).json({ msg: "User Not Exist " });
+    } else {
+      if (!(await comparePassword(data.password, checkUser.password))) {
+        res.status(401).json({ msg: "Wrong Password - User Not Authorised " });
+      } else {
+        const token = getToken(checkUser);
+        res.status(201).json({
+          msg: "User login successful",
+          token: token,
+          user: checkUser,
+        });
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ msg: "User Login failed", error: error.message });
+  }
+};
+
+module.exports = { addUser, auth };

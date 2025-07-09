@@ -13,7 +13,7 @@ const getToken = async (req) => {
     },
     jwtKey,
     {
-      expiresIn: "1h",
+      expiresIn: "11h",
     }
   );
   return token;

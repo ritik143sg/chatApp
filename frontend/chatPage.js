@@ -1,8 +1,40 @@
+const createGroup = document.getElementById("createGroup");
+const showGroup = document.getElementById("showGroup");
+
+createGroup.addEventListener("click", () => {
+  window.location.href = "./groupPage.html";
+});
+
 window.onload = function () {
   localStorage.setItem("allUsers", JSON.stringify([]));
   // localStorage.setItem("allMsgs", JSON.stringify([]));
+  getgroups();
   getNewUser();
   getAllInitialMessage();
+};
+
+const getgroups = async () => {
+  const token = JSON.parse(localStorage.getItem("token"));
+  try {
+    const group = await axios.get(`http://localhost:5000/group/getAllGroup/`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(group.data.groups);
+    showGroups(group.data.groups);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const showGroups = (groups) => {
+  groups.map((group) => {
+    const h1 = document.createElement("h1");
+    h1.innerText = `${group.groupName}`;
+    showGroup.appendChild(h1);
+  });
 };
 
 const get10Msg = (msg) => {
@@ -10,7 +42,7 @@ const get10Msg = (msg) => {
   if (len <= 10) {
     return msg;
   } else {
-    return msg.slice(len - 10 - 1, len);
+    return msg.slice(len - 10, len);
   }
 };
 
@@ -126,7 +158,7 @@ const getNewUser = async () => {
 setInterval(() => {
   getNewUser();
   getAllMessage();
-}, 1000);
+}, 10000);
 
 // getNewUser();
 getNewUser();

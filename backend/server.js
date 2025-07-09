@@ -5,7 +5,8 @@ const cors = require("cors");
 const sequelize = require("./utils/DB/connectDB");
 const { User, Chat } = require("./models");
 const chatRouter = require("./routes/chatRoute");
-
+const groupRouter = require("./routes/groupRoute");
+const { NewGroup } = require("./models/groupModel");
 dotenv.config();
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 
 app.use("/user", userRouter);
 app.use("/message", chatRouter);
+app.use("/group", groupRouter);
 
 const PORT = process.env.PORT || 5000;
 

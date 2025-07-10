@@ -2,7 +2,6 @@ const { User } = require("../models/userModel");
 
 const { encryptPassword, comparePassword } = require("../middleware/bcryptjs");
 const { getToken } = require("../middleware/authentication");
-const { Chat } = require("../models");
 
 const addUser = async (req, res) => {
   const user = req.body;
@@ -69,20 +68,4 @@ const getAllUser = async (req, res) => {
   }
 };
 
-const msgStore = async (req, res) => {
-  const chat = req.body;
-  const user = req.user;
-  console.log(chat.msg);
-  try {
-    const msg = await Chat.create({
-      msg: chat.msg,
-      UserId: user.id,
-    });
-
-    res.status(201).json({ msg: "message store", newmsg: msg });
-  } catch (error) {
-    res.status(201).json({ msg: "store  msg failed", error: error });
-  }
-};
-
-module.exports = { addUser, auth, getAllUser, msgStore };
+module.exports = { addUser, auth, getAllUser };

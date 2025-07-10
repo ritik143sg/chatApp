@@ -6,18 +6,18 @@ const createGroupWithUsers = async (req, res) => {
   console.log(data);
 
   try {
-    // Step 1: Create the group
-    const group = await NewGroup.create({ groupName: data.groupName });
+    const group = await NewGroup.create({
+      groupName: data.groupName,
+      groupAdmin: data.groupAdmin,
+    });
 
-    // Step 2: Fetch the users
     const users = await User.findAll({
       where: {
         id: data.addedUser,
       },
     });
 
-    // Step 3: Associate users with the group
-    await group.addUsers(users); // this auto-fills the junction table
+    await group.addUsers(users);
 
     return res.status(201).json({
       message: "Group created successfully",
@@ -32,7 +32,7 @@ const createGroupWithUsers = async (req, res) => {
 };
 
 const getAllGroup = async (req, res) => {
-  const userId = req.user.id; // from URL: /users/:id/groups
+  const userId = req.user.id;
 
   console.log(req.user);
 
@@ -40,7 +40,7 @@ const getAllGroup = async (req, res) => {
     const user = await User.findByPk(userId, {
       include: {
         model: NewGroup,
-        through: { attributes: [] }, // excludes junction table fields
+        through: { attributes: [] },
       },
     });
 
@@ -50,7 +50,7 @@ const getAllGroup = async (req, res) => {
 
     return res.status(200).json({
       user: user.username,
-      groups: user.NewGroups, // Sequelize adds the "Groups" property
+      groups: user.NewGroups,
     });
   } catch (err) {
     console.error("Error fetching user groups:", err);

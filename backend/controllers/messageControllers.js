@@ -2,13 +2,13 @@ const { Chat } = require("../models");
 const { Op } = require("sequelize");
 
 const getAllMsg = async (req, res) => {
-  const userId = req.user.id;
-  const msgId = req.params.msgId;
+  const groupId = req.params.groupId;
+  const msgId = req.query.msgId;
 
   try {
     const allMsg = await Chat.findAll({
       where: {
-        UserId: userId,
+        newGroupId: groupId,
         id: {
           [Op.gt]: msgId,
         },
@@ -25,4 +25,22 @@ const getAllMsg = async (req, res) => {
   }
 };
 
-module.exports = getAllMsg;
+const msgStore = async (req, res) => {
+  const chat = req.body;
+  const groupId = req.params.groupId;
+  const user = req.user;
+
+  try {
+    const msg = await Chat.create({
+      msg: chat.msg,
+      newGroupId: groupId,
+      UserId: user.id,
+    });
+
+    res.status(201).json({ msg: "message store", newMsg: msg });
+  } catch (error) {
+    res.status(201).json({ msg: "store  msg failed", error: error });
+  }
+};
+
+module.exports = { getAllMsg, msgStore };

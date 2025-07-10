@@ -1,9 +1,10 @@
 const express = require("express");
 const { authentication } = require("../middleware/authentication");
-const getAllMsg = require("../controllers/messageControllers");
+const { getAllMsg, msgStore } = require("../controllers/messageControllers");
 
 const chatRouter = express.Router();
 
-chatRouter.get("/getAllMsg/:msgId", authentication, getAllMsg);
+chatRouter.get("/getAllMsg/:groupId", authentication, getAllMsg);
+chatRouter.post("/chat/:groupId", authentication, msgStore);
 
 module.exports = chatRouter;

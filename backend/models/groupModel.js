@@ -9,6 +9,7 @@ const NewGroup = sequelize.define("NewGroup", {
     type: DataTypes.INTEGER,
   },
   groupName: { allowNull: false, type: DataTypes.STRING },
+  groupAdmin: { allowNull: false, type: DataTypes.STRING },
 });
 
 module.exports = { NewGroup };

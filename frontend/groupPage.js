@@ -1,9 +1,11 @@
 const showButton = document.getElementById("showButton");
 const addButton = document.getElementById("addButton");
 const group = document.getElementById("group");
+const userId = JSON.parse(localStorage.getItem("userId"));
 
 addButton.addEventListener("click", async () => {
   const addedUser = [];
+  addedUser.push(userId);
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach((checkbox, index) => {
     if (checkbox.checked) {
@@ -21,6 +23,7 @@ const createGroupApi = async (addedUser, groupName) => {
   const data = {
     addedUser: addedUser,
     groupName: groupName,
+    groupAdmin: userId,
   };
   console.log(data);
   try {
@@ -38,20 +41,22 @@ const display = (users) => {
   ul.innerHTML = "";
 
   users.forEach((user, index) => {
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.id = `checkbox-${user.id}`;
-    checkbox.value = user.username;
+    if (userId !== user.id) {
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = `checkbox-${user.id}`;
+      checkbox.value = user.username;
 
-    const label = document.createElement("label");
-    label.htmlFor = checkbox.id;
-    label.innerText = ` ${user.username}`;
+      const label = document.createElement("label");
+      label.htmlFor = checkbox.id;
+      label.innerText = ` ${user.username}`;
 
-    const li = document.createElement("li");
-    li.appendChild(checkbox);
-    li.appendChild(label);
+      const li = document.createElement("li");
+      li.appendChild(checkbox);
+      li.appendChild(label);
 
-    ul.appendChild(li);
+      ul.appendChild(li);
+    }
   });
 };
 

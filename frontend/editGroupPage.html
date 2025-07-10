@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="editGroupPage.css" />
+    <title>Edit Group</title>
+  </head>
+  <body>
+    <h1>Make User Admin</h1>
+    <div>
+      <label for="group">Group Name: </label>
+      <input type="text" name="group" id="groupname" />
+      <label for="search">Show User: </label>
+      <button id="showButton">Show</button>
+      <button id="addButton">MakeAdmin</button>
+    </div>
+    <div>
+      <ul id="show"></ul>
+    </div>
+    <div>
+      <ul id="added"></ul>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="editGroupPage.js"></script>
+</html>

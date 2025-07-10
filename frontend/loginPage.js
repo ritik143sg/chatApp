@@ -19,7 +19,7 @@ const handleSubmit = async (event) => {
     localStorage.setItem("token", JSON.stringify(response.data.token));
     localStorage.setItem("userId", JSON.stringify(response.data.user.id));
     alert(response.data.msg);
-    window.location.href = "./groupPage.html";
+    window.location.href = "./chatPage.html";
   } catch (error) {
     console.log(error);
     alert(error.response.data.msg);

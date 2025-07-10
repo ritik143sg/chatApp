@@ -3,11 +3,17 @@ const { NewGroup } = require("./groupModel");
 
 const { User } = require("./userModel");
 
-NewGroup.hasMany(Chat, { foreignKey: "newGroupId" });
-Chat.belongsTo(NewGroup, { foreignKey: "newGroupId" });
+// User.hasMany(Chat);
+// Chat.belongsTo(User);
 
-User.belongsToMany(NewGroup, { through: "userGroups" });
-NewGroup.belongsToMany(User, { through: "userGroups" });
+NewGroup.hasMany(Chat);
+Chat.belongsTo(NewGroup);
+
+User.belongsToMany(NewGroup, { through: "userGroups", as: "UserGroups" });
+NewGroup.belongsToMany(User, { through: "userGroups", as: "GroupUsers" });
+
+User.belongsToMany(NewGroup, { through: "adminGroup", as: "AdminGroups" });
+NewGroup.belongsToMany(User, { through: "adminGroup", as: "GroupAdmins" });
 
 module.exports = {
   Chat,

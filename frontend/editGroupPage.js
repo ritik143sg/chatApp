@@ -1,11 +1,12 @@
 const showButton = document.getElementById("showButton");
 const addButton = document.getElementById("addButton");
-const group = document.getElementById("group");
+const groupname = document.getElementById("groupname");
+
 const userId = JSON.parse(localStorage.getItem("userId"));
 
 addButton.addEventListener("click", async () => {
   const addedUser = [];
-  addedUser.push(userId);
+  // addedUser.push(userId);
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach((checkbox, index) => {
     if (checkbox.checked) {
@@ -13,24 +14,24 @@ addButton.addEventListener("click", async () => {
       addedUser.push(checkbox.id.split("-")[1]);
     }
   });
-  console.log(addedUser, group.value);
+  const groupId = JSON.parse(localStorage.getItem("groupId"));
 
-  await createGroupApi(addedUser, group.value);
+  console.log(addedUser, groupId);
 
-  window.location.href = "./chatPage.html";
+  await createGroupApi(addedUser, groupId);
+  // window.location.href = "./loginPage.html";
 });
 
-const createGroupApi = async (addedUser, groupName) => {
+const createGroupApi = async (addedUser, groupId) => {
   const data = {
     addedUser: addedUser,
-    groupName: groupName,
-    groupAdmin: userId,
+    groupId: groupId,
+    // groupAdmin: userId,
   };
   console.log(data);
   try {
-    const res = await axios.post("http://localhost:5000/group/create", data);
+    const res = await axios.post("http://localhost:5000/admin/make", data);
     alert(res);
-
     console.log(res);
   } catch (error) {
     alert(error);
@@ -63,9 +64,16 @@ const display = (users) => {
 };
 
 showButton.addEventListener("click", async () => {
+  const groupId = JSON.parse(localStorage.getItem("groupId"));
   try {
-    const users = await axios.get("http://localhost:5000/user/getAllUsers");
-    display(users.data.users);
+    const users = await axios.get(
+      `http://localhost:5000/group/getGroupUsers/${groupId}`
+    );
+    // const groupname = document.getElementById("groupname");
+    //console.log(groupname);
+    groupname.value = users.data.users.groupName;
+    console.log(users.data.users);
+    display(users.data.users.GroupUsers);
   } catch (error) {
     console.error("Error fetching users:", error);
   }

@@ -196,7 +196,7 @@ setInterval(() => {
     id: groupId,
   };
   getAllMessage(group);
-}, 1000);
+}, 100000);
 
 // getNewUser();
 // getNewUser();

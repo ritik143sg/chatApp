@@ -7,6 +7,7 @@ const { User, Chat } = require("./models");
 const chatRouter = require("./routes/chatRoute");
 const groupRouter = require("./routes/groupRoute");
 const { NewGroup } = require("./models/groupModel");
+const adminRouter = require("./routes/adminRoute");
 dotenv.config();
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/message", chatRouter);
 app.use("/group", groupRouter);
+app.use("/admin", adminRouter);
 
 const PORT = process.env.PORT || 5000;
 

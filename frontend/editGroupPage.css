@@ -1,0 +1,19 @@
+#box {
+  display: flex;
+}
+
+body {
+  background-color: gray;
+}
+
+#leftBox {
+  width: 20%;
+  margin-left: 7%;
+  margin-right: 7%;
+  height: 500px;
+}
+
+#rightBox {
+  width: 60%;
+  height: 500px;
+}

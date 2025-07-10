@@ -33,7 +33,7 @@ const msgStore = async (req, res) => {
   try {
     const msg = await Chat.create({
       msg: chat.msg,
-      newGroupId: groupId,
+      NewGroupId: groupId,
       UserId: user.id,
     });
 

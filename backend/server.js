@@ -8,6 +8,7 @@ const chatRouter = require("./routes/chatRoute");
 const groupRouter = require("./routes/groupRoute");
 const { NewGroup } = require("./models/groupModel");
 const adminRouter = require("./routes/adminRoute");
+const path = require("path");
 dotenv.config();
 
 const app = express();

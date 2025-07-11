@@ -13,7 +13,10 @@ const handleSubmit = async (event) => {
   };
 
   try {
-    const response = await axios.post("http://localhost:5000/user/login", data);
+    const response = await axios.post(
+      "http://13.232.57.29:5000/user/login",
+      data
+    );
 
     console.log(response);
     localStorage.setItem("token", JSON.stringify(response.data.token));

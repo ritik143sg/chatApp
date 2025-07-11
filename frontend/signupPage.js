@@ -16,7 +16,10 @@ const handleSubmit = async (event) => {
   };
 
   try {
-    const response = await axios.post("http://localhost:5000/user/add", data);
+    const response = await axios.post(
+      "http://13.232.57.29:5000/user/add",
+      data
+    );
 
     console.log(response);
     alert(response.data.msg);

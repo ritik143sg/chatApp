@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "http://13.232.57.29:5000",
     methods: ["GET", "POST"],
   })
 );
@@ -33,4 +33,6 @@ sequelize
       console.log(`App is running on the port ${PORT}`);
     });
   })
-  .catch(() => {});
+  .catch(() => {
+    console.log(`Error`);
+  });

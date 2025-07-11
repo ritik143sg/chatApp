@@ -28,7 +28,7 @@ const createGroupApi = async (addedUser, groupName) => {
   };
   console.log(data);
   try {
-    const res = await axios.post("http://localhost:5000/group/create", data);
+    const res = await axios.post("http://13.232.57.29:5000/group/create", data);
     alert(res);
 
     console.log(res);
@@ -64,7 +64,7 @@ const display = (users) => {
 
 showButton.addEventListener("click", async () => {
   try {
-    const users = await axios.get("http://localhost:5000/user/getAllUsers");
+    const users = await axios.get("http://13.232.57.29:5000/user/getAllUsers");
     display(users.data.users);
   } catch (error) {
     console.error("Error fetching users:", error);

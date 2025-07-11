@@ -20,7 +20,7 @@ const getgroups = async () => {
   const token = JSON.parse(localStorage.getItem("token"));
   try {
     const group = await axios.get(
-      `http://13.232.57.29:5000/group/getAllGroup/`,
+      `http://13.232.57.29:3306/group/getAllGroup/`,
       {
         headers: {
           authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ const getAllMessage = async (group) => {
 
   try {
     const msg = await axios.get(
-      `http://13.232.57.29:5000/message/getAllMsg/${id}?msgId=${0}`,
+      `http://13.232.57.29:3306/message/getAllMsg/${id}?msgId=${0}`,
       {
         headers: {
           authorization: `Bearer ${token}`,
@@ -116,7 +116,7 @@ msgSendButton.addEventListener("click", async () => {
     const token = JSON.parse(localStorage.getItem("token"));
     const groupId = JSON.parse(localStorage.getItem("groupId"));
     const response = await axios.post(
-      `http://13.232.57.29:5000/message/chat/${groupId}`,
+      `http://13.232.57.29:3306/message/chat/${groupId}`,
       data,
       {
         headers: {
@@ -182,7 +182,7 @@ const addNewUsers = (users, getAllUser) => {
 
 const getNewUser = async () => {
   try {
-    const res = await axios.get("http://13.232.57.29:5000/user/getAllUsers");
+    const res = await axios.get("http://13.232.57.29:3306/user/getAllUsers");
     console.log(res);
     const allUsers = res.data.users;
     return allUsers;

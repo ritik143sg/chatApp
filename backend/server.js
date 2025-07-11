@@ -12,12 +12,13 @@ const path = require("path");
 dotenv.config();
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://13.232.57.29:3306",
-    methods: ["GET", "POST"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://13.232.57.29:5000",
+//     methods: ["GET", "POST"],
+//   })
+// );
+app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 

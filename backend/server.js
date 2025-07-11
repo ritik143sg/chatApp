@@ -30,7 +30,7 @@ app.use("/admin", adminRouter);
 const PORT = process.env.PORT || 3306;
 
 app.get("/", (req, res) => {
-  const htmlFile = path.join(__dirname, "..", "frontend", "index.html");
+  const htmlFile = path.join(__dirname, "..", "frontend", "loginPage.html");
   res.sendFile(htmlFile);
 });
 

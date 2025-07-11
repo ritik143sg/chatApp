@@ -1,6 +1,42 @@
 const createGroup = document.getElementById("createGroup");
 const showGroup = document.getElementById("showGroup");
 const groupId = JSON.parse(localStorage.getItem("groupId")) || 1;
+const userId = JSON.parse(localStorage.getItem("userId"));
+
+const userData = {
+  id: userId,
+};
+
+socket.emit("setup", userData);
+
+socket.on("connected", () => {
+  console.log("Connected to socket server");
+});
+
+const roomId = `${groupId}123`;
+socket.emit("join chat", roomId);
+
+socket.on("message recieved", (message) => {
+  console.log("New message received:", message);
+  const msg = message.content;
+  const UserId = message.sender;
+
+  const reMsg = {
+    msg: msg,
+    UserId: UserId,
+  };
+
+  console.log(reMsg);
+
+  const allMsgs = JSON.parse(localStorage.getItem("allMsgs")) || [];
+
+  allMsgs.push(reMsg);
+  displymsg(allMsgs);
+});
+
+socket.on("connect_error", (err) => {
+  console.log("Socket connection failed:", err.message);
+});
 
 createGroup.addEventListener("click", () => {
   window.location.href = "./groupPage.html";
@@ -129,6 +165,22 @@ msgSendButton.addEventListener("click", async () => {
     const group = {
       id: groupId,
     };
+
+    const users = await axios.get(
+      `http://localhost:5000/group/getGroupUsers/${groupId}`
+    );
+
+    const messageData = {
+      sender: userId,
+      content: msg.value,
+      chat: {
+        id: roomId,
+        users: users.data.users.GroupUsers,
+      },
+    };
+
+    socket.emit("new message", messageData);
+
     getAllMessage(group);
   } catch (error) {
     console.log(error);

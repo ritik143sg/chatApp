@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "http://13.232.57.29:5000",
+    origin: "http://13.232.57.29:3306",
     methods: ["GET", "POST"],
   })
 );
@@ -26,7 +26,7 @@ app.use("/message", chatRouter);
 app.use("/group", groupRouter);
 app.use("/admin", adminRouter);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3306;
 
 app.get("/", (req, res) => {
   const htmlFile = path.join(__dirname, "..", "frontend", "index.html");

@@ -18,6 +18,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "..", "frontend")));
 
 app.use("/user", userRouter);
 app.use("/message", chatRouter);
@@ -25,6 +26,11 @@ app.use("/group", groupRouter);
 app.use("/admin", adminRouter);
 
 const PORT = process.env.PORT || 5000;
+
+app.get("/", (req, res) => {
+  const htmlFile = path.join(__dirname, "..", "frontend", "index.html");
+  res.sendFile(htmlFile);
+});
 
 sequelize
   .sync({ force: false })

@@ -15,7 +15,7 @@ const { Server } = require("socket.io");
 const fileRouter = require("./routes/fileRoute");
 require("./middleware/multer");
 dotenv.config();
-
+require("./cronJobs/archiveOldChats");
 const app = express();
 // app.use(
 //   cors({

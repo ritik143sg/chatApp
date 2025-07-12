@@ -12,7 +12,7 @@ const handleSubmit = async (e) => {
     console.log(id);
 
     const res = await axios.post(
-      `http://localhost:5000/upload/addFile/${id}`,
+      `http://13.233.79.22:5000/upload/addFile/${id}`,
       formData,
       {
         headers: {
@@ -24,7 +24,7 @@ const handleSubmit = async (e) => {
     e.target.reset();
 
     const users = await axios.get(
-      `http://localhost:5000/group/getGroupUsers/${groupId}`
+      `http://13.233.79.22:5000/group/getGroupUsers/${groupId}`
     );
 
     const messageData = {

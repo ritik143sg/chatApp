@@ -30,7 +30,7 @@ const createGroupApi = async (addedUser, groupId) => {
   };
   console.log(data);
   try {
-    const res = await axios.post("http://13.232.57.29:5000/admin/make", data);
+    const res = await axios.post("http://13.233.79.22:5000/admin/make", data);
     alert(res);
     console.log(res);
   } catch (error) {
@@ -67,7 +67,7 @@ showButton.addEventListener("click", async () => {
   const groupId = JSON.parse(localStorage.getItem("groupId"));
   try {
     const users = await axios.get(
-      `http://13.232.57.29:5000/group/getGroupUsers/${groupId}`
+      `http://13.233.79.22:5000/group/getGroupUsers/${groupId}`
     );
     // const groupname = document.getElementById("groupname");
     //console.log(groupname);

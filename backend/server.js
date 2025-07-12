@@ -19,7 +19,7 @@ dotenv.config();
 const app = express();
 // app.use(
 //   cors({
-//     origin: "http://13.232.57.29:5000",
+//     origin: "http://13.233.79.22:5000",
 //     methods: ["GET", "POST"],
 //   })
 // );
@@ -48,7 +48,7 @@ sequelize
     const io = new Server(server, {
       pingTimeout: 60000,
       cors: {
-        origin: "http://localhost:5000",
+        origin: "http://13.233.79.22:5000",
       },
     });
 

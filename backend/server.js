@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const userRouter = require("./routes/userRoute");
 const cors = require("cors");
+const fs = require("fs");
 const sequelize = require("./utils/DB/connectDB");
 const { User, Chat } = require("./models");
 const chatRouter = require("./routes/chatRoute");
@@ -11,6 +12,8 @@ const adminRouter = require("./routes/adminRoute");
 const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
+const fileRouter = require("./routes/fileRoute");
+require("./middleware/multer");
 dotenv.config();
 
 const app = express();
@@ -28,6 +31,7 @@ app.use("/user", userRouter);
 app.use("/message", chatRouter);
 app.use("/group", groupRouter);
 app.use("/admin", adminRouter);
+app.use("/upload", fileRouter);
 
 const PORT = process.env.PORT || 5000;
 

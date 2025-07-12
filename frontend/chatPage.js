@@ -198,18 +198,48 @@ const displymsg = async (message) => {
   const ul = document.querySelector("ul");
   ul.innerHTML = "";
   message.forEach((msg) => {
-    const li = document.createElement("li");
-    if (msg.UserId === UserId) {
-      li.innerText = `You: ${msg.msg} `;
-    } else {
-      allUsers.map((user) => {
-        if (msg.UserId === user.id) {
-          li.innerText = `${user.username}: ${msg.msg} `;
-        }
-      });
-    }
+    if (msg.msg.slice(0, 8) === "https://") {
+      const li = document.createElement("li");
+      if (msg.UserId === UserId) {
+        li.innerText = `You:  `;
+      } else {
+        allUsers.map((user) => {
+          if (msg.UserId === user.id) {
+            li.innerText = `${user.username}:  `;
+          }
+        });
+      }
 
-    ul.appendChild(li);
+      if (msg.msg.endsWith(".mp4") || msg.msg.endsWith(".webm")) {
+        const video = document.createElement("video");
+        video.src = msg.msg;
+        video.width = 300;
+        video.height = 300;
+        video.controls = true;
+        li.appendChild(video);
+      } else {
+        const img = document.createElement("img");
+        img.src = msg.msg;
+        img.width = 300;
+        img.height = 300;
+        li.appendChild(img);
+      }
+
+      ul.appendChild(li);
+    } else {
+      const li = document.createElement("li");
+      if (msg.UserId === UserId) {
+        li.innerText = `You: ${msg.msg} `;
+      } else {
+        allUsers.map((user) => {
+          if (msg.UserId === user.id) {
+            li.innerText = `${user.username}: ${msg.msg} `;
+          }
+        });
+      }
+
+      ul.appendChild(li);
+    }
   });
 };
 
@@ -245,13 +275,13 @@ const getNewUser = async () => {
   }
 };
 
-setInterval(() => {
-  const groupId = JSON.parse(localStorage.getItem("groupId"));
-  const group = {
-    id: groupId,
-  };
-  getAllMessage(group);
-}, 1000);
+// setInterval(() => {
+//   const groupId = JSON.parse(localStorage.getItem("groupId"));
+//   const group = {
+//     id: groupId,
+//   };
+//   getAllMessage(group);
+// }, 1000);
 
 // getNewUser();
 // getNewUser();

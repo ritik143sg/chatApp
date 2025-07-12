@@ -37,6 +37,20 @@
     <div id="footer">
       <input type="text" name="msg" id="msg" />
       <button id="msgSend">Send</button>
+      <form
+        action="/profile"
+        method="post"
+        enctype="multipart/form-data"
+        onsubmit="handleSubmit(event)"
+      >
+        <input
+          style="margin-left: 20px"
+          type="file"
+          name="avatar"
+          id="avatar"
+        />
+        <button>Send File</button>
+      </form>
     </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -60,4 +74,5 @@
     }
   </script>
   <script src="chatPage.js"></script>
+  <script src="file.js"></script>
 </html>

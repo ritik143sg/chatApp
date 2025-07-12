@@ -39,7 +39,7 @@ cron.schedule("* * * * *", async () => {
     await Chat.destroy({
       where: {
         createdAt: {
-          [Op.lt]: oneDayAgo,
+          [Op.lt]: oneMinuteAgo,
         },
       },
     });

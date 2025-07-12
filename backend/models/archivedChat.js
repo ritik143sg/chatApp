@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../utils/DB/connectDB");
 
-const ArchivedChat = sequelize.define("Chat", {
+const ArchivedChat = sequelize.define("ArchivedChat", {
   id: {
     primaryKey: true,
     autoIncrement: true,

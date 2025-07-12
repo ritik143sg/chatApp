@@ -13,9 +13,11 @@ const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
 const fileRouter = require("./routes/fileRoute");
+const { ArchivedChat } = require("./models/archivedChat");
 require("./middleware/multer");
 dotenv.config();
 require("./cronJobs/archiveOldChats");
+
 const app = express();
 // app.use(
 //   cors({

@@ -9,12 +9,12 @@ cron.schedule("* * * * *", async () => {
     console.log("Archiving old chats...");
 
     // Find chats older than 1 day
-    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const oneMinuteAgo = new Date(Date.now() - 1 * 60 * 1000);
 
     const oldChats = await Chat.findAll({
       where: {
         createdAt: {
-          [Op.lt]: oneDayAgo,
+          [Op.lt]: oneMinuteAgo,
         },
       },
     });

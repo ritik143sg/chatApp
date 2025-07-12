@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const { ArchivedChat } = require("../models/archivedChat");
 
 // Runs every night at midnight (00:00)
-cron.schedule("0 0 * * *", async () => {
+cron.schedule("* * * * *", async () => {
   try {
     console.log("Archiving old chats...");
 
